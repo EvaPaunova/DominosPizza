@@ -196,5 +196,26 @@ public class UserDao implements IUserDao{
 		
 		return false;
 	}
+	
+	public boolean checkUserData(String username, String password){
+		String sqlCheckUser = "SELECT * \nFROM users \nWHERE username = ? ;";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(sqlCheckUser);
+			ps.setString(1, username);
+			ResultSet result = ps.executeQuery();
+			while(result.next()) {
+				String pass = result.getString("password");
+				if(pass.equals(password)) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 }

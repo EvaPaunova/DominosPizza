@@ -21,5 +21,7 @@ public interface IUserDao {
 	public void addNewUser(User user) throws SQLException;
 	
 	public boolean checkUserExist(String username) throws SQLException;
+	
+	public boolean checkUserData(String username, String password);
 
 }
