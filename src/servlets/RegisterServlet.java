@@ -54,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				try {
-					UserManager.getInstance().addNewUser(user);
+					UserManager.getInstance().register(user);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

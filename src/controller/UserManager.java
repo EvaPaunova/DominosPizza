@@ -26,7 +26,7 @@ public class UserManager {
 		return userDao.checkUserData(username, password);
 	}
 	
-	public void addNewUser(User user) {
+	public void register(User user) {
 		try {
 			if(!userDao.checkUserExist(user.getUsername())) {
 				userDao.addNewUser(user);
