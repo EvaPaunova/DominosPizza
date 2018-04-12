@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class DBManager {
 	
-	private static final String DB_PASS = "";
-	private static final String DB_USER = "";
+	private static final String DB_PASS = "EvaPaunova96";
+	private static final String DB_USER = "root";
 	private static final String DB_PORT = "3306";
-	private static final String DB_IP = "";
+	private static final String DB_IP = "84.238.195.46";
 	private static final String DB_NAME = "Dominos";
 	
 	private static Connection connection;

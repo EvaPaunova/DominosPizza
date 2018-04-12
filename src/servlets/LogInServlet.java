@@ -17,7 +17,7 @@ import model.dao.UserDao;
 @WebServlet("/login")
 public class LogInServlet extends HttpServlet {
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
@@ -38,7 +38,13 @@ public class LogInServlet extends HttpServlet {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-}
+		}
+	}
+	
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
 	}
 
 }
