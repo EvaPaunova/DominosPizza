@@ -1,8 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import exceptions.InvalidArgumentsException;
 
 public class User {
@@ -143,6 +148,27 @@ public class User {
 		}
 	}
 
+	public Map<Product, Integer> getCart() {
+		return Collections.unmodifiableMap(this.cart);
+	}
 	
+	public void addProductToShoppingCart(Product product, int count) {
+		if(this.cart.containsKey(product)) {
+			cart.put(product, this.cart.get(product) + count);
+		}
+		else{
+			this.cart.put(product, count);
+		}
+	}
+	
+	public void removeProductFromShoppingCart(Product product) {
+		Iterator<Product> it = this.cart.keySet().iterator();
+		while (it.hasNext()) {
+			Product prod = it.next();
+			if(product.equals(prod)) {
+				it.remove();
+			}
+		}
+	}
 	
 }

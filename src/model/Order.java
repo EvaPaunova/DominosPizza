@@ -22,6 +22,13 @@ public class Order {
 		setStatus(status);
 	}
 	
+	public Order(double price,LocalDateTime date, Status status, Map<Product, Integer> products) {
+		setPrice(price);
+		setDate(date);
+		setStatus(status);
+		this.products = products;
+	}
+	
 	public Order(int id,double price,LocalDateTime date, Status status) {
 		this(price,date,status);
 		setId(id);
@@ -32,6 +39,14 @@ public class Order {
 		this.date = date;
 		this.status = status;
 		setId(id);
+	}
+	
+	public Order(int id,double price,LocalDateTime date, int status, Map<Product, Integer> products) {
+		this.id = id;
+		this.date = date;
+		this.status = status;
+		setId(id);
+		this.setProducts(products);
 	}
 	
 	

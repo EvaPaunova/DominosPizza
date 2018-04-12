@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import db.DBManager;
@@ -40,7 +41,7 @@ public class IngredientsDao implements IIngredientDao{
 			double price = set.getDouble("price");
 			ingredients.add(new Ingredient(id,name,price));
 		}
-		return ingredients;
+		return Collections.unmodifiableList(ingredients);
 	}
 
 	@Override

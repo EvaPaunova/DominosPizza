@@ -28,7 +28,9 @@ public class Ingredient {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if(name != null && !(name.equals(""))) {
+			this.name = name;
+		}	
 	}
 
 	public double getPrice() {
@@ -36,7 +38,10 @@ public class Ingredient {
 	}
 
 	public void setPrice(double price) {
-		this.price = price;
+		if(price > 0) {
+			this.price = price;
+		}
+		
 	}
 
 }
