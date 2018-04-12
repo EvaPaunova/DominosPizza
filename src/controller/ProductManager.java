@@ -59,5 +59,13 @@ public class ProductManager {
 		//print list of products
 	}
 	
+	public void addNewProduct(Product product) {
+		try {
+			productDao.addNewProduct(product);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+	}
 
 }

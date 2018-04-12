@@ -11,7 +11,9 @@ import java.util.List;
 
 import db.DBManager;
 import exceptions.InvalidArgumentsException;
+import model.Ingredient;
 import model.Order;
+import model.Product;
 import model.Status;
 import model.User;
 
@@ -105,5 +107,19 @@ public class OrderDao implements IOrderDao{
 		
 	}
 	
+	public void addOrderProducts(Order order) throws SQLException {
+		ArrayList<Product> products = new ArrayList<>(order.getProducts().keySet());
+		for(int i = 0; i < products.size(); i++) {
+			String sql = "INSERT INTO orders_has_products (order_id, product_id) \\nVALUES(?,?)";
+			try(PreparedStatement ps = connection.prepareStatement(sql)){
+				ps.setLong(1, order.getId());
+				ps.setLong(1, products.get(i).getId());
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 
 }
