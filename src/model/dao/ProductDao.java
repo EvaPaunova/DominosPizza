@@ -103,11 +103,27 @@ public class ProductDao implements IProductDao{
 			try(PreparedStatement ps = connection.prepareStatement(sql)){
 				ps.setInt(1, product.getId());
 				ps.setInt(1, ingredients.get(i).getId());
+				ps.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
 			}
 		}
 	}
+
+	@Override
+	public void addFovoriteProduct(int user, int product) throws SQLException {
+		String sql = "INSERT INTO user_has_favorite_products (user_id, product_id) \\nVALUES(?,?)";
+		try(PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, user);
+			ps.setInt(1, product);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
 
 }

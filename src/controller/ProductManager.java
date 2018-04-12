@@ -19,7 +19,7 @@ public class ProductManager {
 		return instance;
 	}
 
-	
+	 
 	
 
 }

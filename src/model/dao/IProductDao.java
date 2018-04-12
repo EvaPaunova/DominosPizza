@@ -17,5 +17,7 @@ public interface IProductDao {
 	public void addNewProduct(Product product) throws SQLException;
 	
 	public void addIngredients(Product product) throws SQLException;
+	
+	public void addFovoriteProduct(int user, int product) throws SQLException;
 
 }

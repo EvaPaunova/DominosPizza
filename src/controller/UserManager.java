@@ -11,6 +11,7 @@ import model.Status;
 import model.User;
 import model.dao.IUserDao;
 import model.dao.OrderDao;
+import model.dao.ProductDao;
 import model.dao.UserDao;
 
 public class UserManager {
@@ -97,8 +98,13 @@ public class UserManager {
 		//print list of orders
 	}
 	
-	public void addProductToFavorites(Product product) {
-		
+	public void addProductToFavorites(User user, Product product) {
+		try {
+			ProductDao.getInstance().addFovoriteProduct(user.getId(), product.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
 	}
 	
 
