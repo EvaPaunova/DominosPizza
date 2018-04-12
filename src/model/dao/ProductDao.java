@@ -55,6 +55,7 @@ public class ProductDao implements IProductDao{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
@@ -91,8 +92,22 @@ public class ProductDao implements IProductDao{
 			e.printStackTrace();
 		}
 		
+		addIngredients(product);
+		
 	}
 	
-
+	public void addIngredients(Product product) {
+		ArrayList<Ingredient> ingredients = new ArrayList<>(product.getIngredients());
+		for(int i = 0; i < ingredients.size(); i++) {
+			String sql = "INSERT INTO products_has_ingredients (product_id, ingredient_id) \\nVALUES(?,?)";
+			try(PreparedStatement ps = connection.prepareStatement(sql)){
+				ps.setInt(1, product.getId());
+				ps.setInt(1, ingredients.get(i).getId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 
 }

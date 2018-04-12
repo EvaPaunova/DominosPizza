@@ -96,5 +96,10 @@ public class UserManager {
 		}
 		//print list of orders
 	}
+	
+	public void addProductToFavorites(Product product) {
+		
+	}
+	
 
 }
