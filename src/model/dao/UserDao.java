@@ -20,6 +20,8 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
+import controller.UserManager;
+
 
 public class UserDao implements IUserDao{
 	
@@ -129,10 +131,11 @@ public class UserDao implements IUserDao{
 			ps = connection.prepareStatement(sqlDeleteUser);
 			ps.setLong(1, user.getId());
 			ps.executeUpdate();
-			System.out.println("Use has been deleted!");
+			System.out.println("User has been deleted!");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		UserManager.getInstance().getAllUsers();
 		
 	}
 
@@ -156,6 +159,7 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		UserManager.getInstance().getAllUsers();
 	}
 
 	@Override
@@ -185,7 +189,7 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
+		UserManager.getInstance().getAllUsers();
 	}
 
 	@Override

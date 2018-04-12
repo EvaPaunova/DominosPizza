@@ -1,7 +1,10 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.InvalidArgumentsException;
 import model.Ingredient;
@@ -18,9 +21,12 @@ public class UserManager {
 	
 	private static UserManager instance;
 	private IUserDao userDao;
+	public static List users;
 	
 	private UserManager() {
 		this.userDao = UserDao.getInstance();
+		users = new ArrayList<>();
+		getAllUsers();
 	}
 
 	public static UserManager getInstance() {
@@ -107,5 +113,8 @@ public class UserManager {
 		}
 	}
 	
+	public void getAllUsers() {
+		users = UserDao.getInstance().getAllUsers();
+	}
 
 }
