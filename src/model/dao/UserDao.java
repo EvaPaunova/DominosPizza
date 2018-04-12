@@ -11,6 +11,16 @@ import db.DBManager;
 import exceptions.InvalidArgumentsException;
 import model.User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mysql.jdbc.Statement;
+
+
 public class UserDao implements IUserDao{
 	
 	private static UserDao instance;
@@ -27,7 +37,7 @@ public class UserDao implements IUserDao{
 		}
 		return instance;
 	}
-
+	
 	@Override
 	public List<User> getAllUsers() {
 		String sqlSelectAllUsers = "SELECT * FROM users \n WHERE isAdmin = ?;";
@@ -49,12 +59,12 @@ public class UserDao implements IUserDao{
 				users.add(new User(firstName, lastName, username, email, password, address, phoneNumber));
 			}
 		} catch (SQLException | InvalidArgumentsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return users;
 	}
-
+	
+	
 	@Override
 	public User getUserById(int id){
 		User user = null;
@@ -73,11 +83,11 @@ public class UserDao implements IUserDao{
 				String username = result.getString("username");
 				String password = result.getString("password");
 				
-				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
+				user = new User(firstName, lastName, username, password, email, address, phoneNumber);
+				user.setId(id);
 			}
 		} catch (SQLException | InvalidArgumentsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return user;
@@ -93,6 +103,7 @@ public class UserDao implements IUserDao{
 			ps.setString(1, username);
 			ResultSet result = ps.executeQuery();
 			while (result.next()) {
+				long id = result.getLong("user_id");
 				String firstName = result.getString("first_name");
 				String lastName = result.getString("last_name");
 				String email = result.getString("email");
@@ -100,35 +111,34 @@ public class UserDao implements IUserDao{
 				String phoneNumber = result.getString("phone_number");
 				String password = result.getString("password");
 				
-				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
+				user = new User(id, firstName, lastName, username, email, password, address, phoneNumber);
 			}
 		} catch (SQLException | InvalidArgumentsException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return user;
 	}
 	
 	
-
 	@Override
 	public void deleteUser(User user){
 		String sqlDeleteUser = "DELETE FROM users \nWHERE user_id = ?;";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(sqlDeleteUser);
-			ps.setInt(1, user.getId());
+			ps.setLong(1, user.getId());
 			ps.executeUpdate();
+			System.out.println("Use has been deleted!");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 	}
 
 	@Override
 	public void updateUser(User user) {
-		String sqlUpdateUser  = "UPDATE users \nSET first_name = ?, last_name = ?, address = ?,email = ?,phone_number = ?,username = ?,password = ?\nWHERE user_id = ?;";
+		String sqlUpdateUser  = "UPDATE users SET first_name = ?, last_name = ?, address = ?,email = ?,phone_number = ?,username = ?,password = ? WHERE user_id = ?;";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(sqlUpdateUser);
@@ -139,13 +149,13 @@ public class UserDao implements IUserDao{
 			ps.setString(5, user.getPhoneNumber());
 			ps.setString(6, user.getUsername());
 			ps.setString(7, user.getPassword());
-			ps.setInt(8, user.getId());
+			System.out.println();
+			ps.setLong(8, user.getId());
 			ps.executeUpdate();
+			System.out.println("User data updated!");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		
 	}
 
 	@Override
@@ -153,9 +163,9 @@ public class UserDao implements IUserDao{
 		String sqlInsertUser = "INSERT INTO users (first_name, last_name, email, address, phone_number, username, password, isAdmin) \nVALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 		try {
-			ps = connection.prepareStatement(sqlInsertUser);
+			ps = connection.prepareStatement(sqlInsertUser,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, user.getFirstName());
-			ps.setString(2, user.getFirstName());
+			ps.setString(2, user.getLastName());
 			ps.setString(3, user.getEmail());
 			ps.setString(4, user.getAddress());
 			ps.setString(5, user.getPhoneNumber());
@@ -163,12 +173,17 @@ public class UserDao implements IUserDao{
 			ps.setString(7, user.getPassword());
 			ps.setBoolean(8, false);
 			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
-			rs.next();
-			user.setId(rs.getInt(1));
+			try(ResultSet rs = ps.getGeneratedKeys()){
+				if(rs.next()) {
+					user.setId(rs.getLong(1));
+				}
+				System.out.println("New user added!");
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -189,13 +204,13 @@ public class UserDao implements IUserDao{
 				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return false;
 	}
 	
+	@Override
 	public boolean checkUserData(String username, String password){
 		String sqlCheckUser = "SELECT * \nFROM users \nWHERE username = ? ;";
 		PreparedStatement ps;
@@ -210,13 +225,10 @@ public class UserDao implements IUserDao{
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return false;
 	}
-	
-	
 
 }

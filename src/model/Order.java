@@ -7,8 +7,8 @@ import java.util.Map;
 
 
 public class Order {
-	private int id;
-	private int userId;
+	private long id;
+	private long userId;
 	
 	private int status;
 	private double price;
@@ -29,12 +29,12 @@ public class Order {
 		this.products = products;
 	}
 	
-	public Order(int id,double price,LocalDateTime date, Status status) {
+	public Order(long id,double price,LocalDateTime date, Status status) {
 		this(price,date,status);
 		setId(id);
 	}
 	
-	public Order(int id,double price,LocalDateTime date, int status) {
+	public Order(long id,double price,LocalDateTime date, int status) {
 		this.id = id;
 		this.date = date;
 		this.status = status;
@@ -50,11 +50,11 @@ public class Order {
 	}
 	
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -90,12 +90,12 @@ public class Order {
 		this.address = address;
 	}
 	
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(long id) {
+		this.userId = id;
 	}
 
 	

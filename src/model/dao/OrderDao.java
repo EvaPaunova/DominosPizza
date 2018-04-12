@@ -39,7 +39,7 @@ public class OrderDao implements IOrderDao{
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(sqlSelectAllOrders);
-			ps.setInt(1, user.getId());
+			ps.setLong(1, user.getId());
 			ResultSet set = ps.executeQuery();
 			while (set.next()) {
 				int id = set.getInt("order_id");
@@ -61,7 +61,7 @@ public class OrderDao implements IOrderDao{
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(sqlDeleteOrder);
-			ps.setInt(1, order.getId());
+			ps.setLong(1, order.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -76,7 +76,7 @@ public class OrderDao implements IOrderDao{
 		try {
 			ps = connection.prepareStatement(sqlUpdateIngredient);
 			ps.setInt(1, status.getId());
-			ps.setInt(2, order.getId());
+			ps.setLong(2, order.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,7 +92,7 @@ public class OrderDao implements IOrderDao{
 			ps = connection.prepareStatement(sqlInsertOrder);
 			ps.setDouble(1, order.getPrice());
 			ps.setString(2, order.getAddress());
-			ps.setInt(3, order.getUserId());
+			ps.setLong(3, order.getUserId());
 			ps.setInt(4, order.getStatus());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();

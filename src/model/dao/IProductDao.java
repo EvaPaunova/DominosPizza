@@ -18,6 +18,6 @@ public interface IProductDao {
 	
 	public void addIngredients(Product product) throws SQLException;
 	
-	public void addFovoriteProduct(int user, int product) throws SQLException;
+	public void addFovoriteProduct(long user, long product) throws SQLException;
 
 }

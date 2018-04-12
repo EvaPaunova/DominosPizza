@@ -112,11 +112,11 @@ public class ProductDao implements IProductDao{
 	}
 
 	@Override
-	public void addFovoriteProduct(int user, int product) throws SQLException {
+	public void addFovoriteProduct(long user, long product) throws SQLException {
 		String sql = "INSERT INTO user_has_favorite_products (user_id, product_id) \\nVALUES(?,?)";
 		try(PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, user);
-			ps.setInt(1, product);
+			ps.setLong(1, user);
+			ps.setLong(1, product);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

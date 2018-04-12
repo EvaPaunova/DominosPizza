@@ -27,7 +27,7 @@ public class User {
 	public static final String INVALID_ADDRESS = "Invalid address";
 	public static final String INVALID_USERNAME = "Invalid username";
 	
-	private int id;
+	private long id;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -50,16 +50,16 @@ public class User {
 		setPhoneNumber(phoneNumber);
 	}
 	
-	public User(int id,String firstname,String lastname,String username, String email, String password, String address, String phoneNumber) throws InvalidArgumentsException {
+	public User(long id,String firstname,String lastname,String username, String email, String password, String address, String phoneNumber) throws InvalidArgumentsException {
 		this(firstname,lastname,username,password,email,address,phoneNumber);
 		setId(id);
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -141,7 +141,7 @@ public class User {
 	}
 
 	public void setEmail(String email) throws InvalidArgumentsException {
-		if ((email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))) {
+		if (email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
 			this.email = email;
 		} else {
 			throw new InvalidArgumentsException(INVALID_EMAIL);
