@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.UserManager;
 import exceptions.InvalidArgumentsException;
@@ -22,17 +23,18 @@ public class LogInServlet extends HttpServlet {
 		
 		try {
 			if (UserDao.getInstance().checkUserData(username, password)) {
-				request.getSession().setAttribute("logged", true);
-				request.getSession().setAttribute("user", UserDao.getInstance().getUserByUsername(username));
-				request.getRequestDispatcher("logged.html").forward(request, response);
+				HttpSession session = request.getSession();
+				session.setAttribute("logged", true);
+				session.setAttribute("user", UserDao.getInstance().getUserByUsername(username));
+				response.sendRedirect("logged.html");
 				return;
 			} else {
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+				response.sendRedirect("login.html");
 				return;
 			}
 		} catch (IOException e) {
 			try {
-				request.getRequestDispatcher("error.jsp").forward(request, response);
+				response.sendRedirect("error.html");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
