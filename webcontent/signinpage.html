@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<title>Domino's Pizza</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css.css">
+<style>
+body {font-family: "Monotype corsiva", Georgia, Serif;}
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Arial";
+    letter-spacing:1px;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top" style = "font-family:Arial">
+  <div class="w3-bar w3-white w3-padding w3-card">
+    <a href="html.html" ><img border="0"src="home-icon.png" width="40" height="40"></a>
+  </div> 
+</div>
+
+<header style="max-width:1600px;min-width:500px" id="home">
+  <img src="image1.jpg" alt="Hamburger Catering" width="1600" height="800">
+  <div style = "position:fixed; left:40%; bottom:0;">
+	<div class = "signin-container" style= "text-align:center">
+	<div id = "sign in" >
+	
+		<form action="/RegisterServlet" target="_blank">
+		<h3  style= "background-color: red;border: none;color: white;padding: 10px 150px;text-align: center;display: inline-block;font-size: 18px;  border-radius: 10px;">Sign in</h3>
+		<p><input style = "padding:8px;margin-left:25%;display:block;border:none;border-bottom:1px solid #ccc;width:200px;height:40px;text-align:center;" type="text" placeholder="first name" required name="First name"></p>
+		  <p><input style = "padding:8px;margin-left:25%;display:block;border:none;border-bottom:1px solid #ccc;width:200px;height:40px;text-align:center;" type="text" placeholder="last name" required name="Last name"></p>
+		  <p><input style = "padding:8px; margin-left:25%;display:block;border:none;border-bottom:1px solid #ccc;width:200px;height:40px;text-align:center;" type="text" placeholder="username" required name="Username"></p>
+		  <p><input style = "padding:8px;margin-left:25%;display:block;border:none;border-bottom:1px solid #ccc;width:200px;height:40px;text-align:center;" type="text" placeholder="email" required name="Email"></p>
+		   <p><input style = "padding:8px;margin-left:25%;display:block;border:none;border-bottom:1px solid #ccc;width:200px;height:40px;text-align:center;" type="password" placeholder="password" required name="Password"></p>
+		  <p><input style = "padding:8px;margin-left:25%;display:block;border:none;border-bottom:1px solid #ccc;width:200px;height:40px;text-align:center;" type="password" placeholder="confirm password" required name="Confirm password"></p>
+		  <p><button style = " background-color: red;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;  border-radius: 10px;" type="submit" ">Sign in</button></p>
+		</form>
+	</div>
+  </div>
+  </div>
+</header>
+</body>
+</html>
