@@ -103,7 +103,6 @@ public class UserDao implements IUserDao{
 				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
 			}
 		} catch (SQLException | InvalidArgumentsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
