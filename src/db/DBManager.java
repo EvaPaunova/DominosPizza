@@ -10,7 +10,7 @@ public class DBManager {
 	private static final String DB_USER = "root";
 	private static final String DB_PORT = "3306";
 	private static final String DB_IP = "84.238.195.46";
-	private static final String DB_NAME = "Dominos";
+	private static final String DB_NAME = "dominos";
 	
 	private static Connection connection;
 	private static DBManager instance;

@@ -26,25 +26,20 @@ public class LogInServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("logged", true);
 				session.setAttribute("user", UserDao.getInstance().getUserByUsername(username));
-				response.sendRedirect("logged.html");
+				response.sendRedirect("html.html");
 				return;
 			} else {
-				response.sendRedirect("login.html");
+				response.sendRedirect("html.html");
 				return;
 			}
 		} catch (IOException e) {
 			try {
-				response.sendRedirect("error.html");
+				response.sendRedirect("html.html");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
 	}
 	
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
-	}
 
 }
