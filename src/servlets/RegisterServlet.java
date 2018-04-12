@@ -21,7 +21,7 @@ import model.User;
 /**
  * Servlet implementation class RegisterServlet
  */
-@WebServlet("/RegisterServlet")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     /**
@@ -46,27 +46,24 @@ public class RegisterServlet extends HttpServlet {
 
 		User user = null;
 		
-		PrintWriter out = null;
-			if (password.equals(confirmpassword)) {
-				try {
-					user = new User(firstName, lastName, username, email, password, address, phoneNumber);
-				} catch (InvalidArgumentsException e) {
-					e.printStackTrace();
-				}
-				try {
-					UserManager.getInstance().register(user);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-				out = response.getWriter();
-				out.println("Successfull registration!");
-				
-				return;
-			} else {
-				out = response.getWriter();
-				out.println("Yur password does not match!");
+		if (password.equals(confirmpassword)) {
+			try {
+				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
+			} catch (InvalidArgumentsException e) {
+				e.printStackTrace();
 			}
+			try {
+				UserManager.getInstance().register(user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			response.getWriter().println("Successfull registration!");
+			
+			return;
+		} else {
+			response.getWriter().println("Yur password does not match!");
+		}
 	}
 	
 	/**
@@ -74,7 +71,6 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 }

@@ -86,15 +86,14 @@ public class OrderDao implements IOrderDao{
 
 	@Override
 	public void addNewOrder(Order order) throws SQLException {
-		String sqlInsertOrder = "INSERT INTO orders (price, date, address, user_id, status_id) \nVALUES(?,?,?,?,?)";
+		String sqlInsertOrder = "INSERT INTO orders (price, address, user_id, status_id) \nVALUES(?,?,?,?)";
 		PreparedStatement ps;
 		try{
 			ps = connection.prepareStatement(sqlInsertOrder);
 			ps.setDouble(1, order.getPrice());
-			//ps.setDate(2, Date.valueOf(order.getDate()));
-			ps.setString(3, order.getAddress());
-			ps.setInt(4, order.getUserId());
-			ps.setInt(5, order.getStatus());
+			ps.setString(2, order.getAddress());
+			ps.setInt(3, order.getUserId());
+			ps.setInt(4, order.getStatus());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
