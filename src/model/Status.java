@@ -2,7 +2,7 @@ package model;
 
 public enum Status {
 
-	REGISTRATEDR("registrated",1),SEND("send",2),DELIVERED("delivered",3);
+	REGISTRATED("registrated",1),SEND("send",2),DELIVERED("delivered",3);
 	
 	private String name;
 	private int id;

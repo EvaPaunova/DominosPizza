@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import db.DBManager;
 import exceptions.InvalidArgumentsException;
 import model.Order;
@@ -86,23 +88,28 @@ public class OrderDao implements IOrderDao{
 
 	@Override
 	public void addNewOrder(Order order) throws SQLException {
-		String sqlInsertOrder = "INSERT INTO orders (price, address, user_id, status_id) \nVALUES(?,?,?,?)";
+		String sqlInsertOrder = "INSERT INTO orders (price, date,address, user_id, status_id) \nVALUES(?,?,?,?,?)";
 		PreparedStatement ps;
 		try{
-			ps = connection.prepareStatement(sqlInsertOrder);
+			ps = connection.prepareStatement(sqlInsertOrder,Statement.RETURN_GENERATED_KEYS);
 			ps.setDouble(1, order.getPrice());
-			ps.setString(2, order.getAddress());
-			ps.setLong(3, order.getUserId());
-			ps.setInt(4, order.getStatus());
+			ps.setDate(2,null);
+			ps.setString(3, order.getAddress());
+			ps.setLong(4, order.getUserId());
+			ps.setInt(5, 1);
 			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
-			rs.next();
-			order.setId(rs.getInt(1));
+			try(ResultSet rs = ps.getGeneratedKeys()){
+				if(rs.next()) {
+					order.setId(rs.getInt(1));
+				}
+			}
+			catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		
+				
 	}
 	
 

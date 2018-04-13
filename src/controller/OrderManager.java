@@ -28,7 +28,7 @@ public class OrderManager {
 	}
 	
 	public Order createNewOrder( Map<Product, Integer> products) {
-		Order order = new Order(calculateOrderPrice(products), LocalDateTime.now(), Status.REGISTRATEDR, products);
+		Order order = new Order(calculateOrderPrice(products), LocalDateTime.now(), Status.REGISTRATED, products);
 		return order;
 	}
 	

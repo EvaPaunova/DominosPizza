@@ -29,12 +29,12 @@ public class LogInServlet extends HttpServlet {
 				response.sendRedirect("html.html");
 				return;
 			} else {
-				response.sendRedirect("html.html");
+				response.sendRedirect("loging.html");
 				return;
 			}
 		} catch (IOException e) {
 			try {
-				response.sendRedirect("html.html");
+				response.sendRedirect("loging.html");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

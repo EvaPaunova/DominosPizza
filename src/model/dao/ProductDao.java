@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import db.DBManager;
 import exceptions.InvalidArgumentsException;
 import model.Ingredient;
@@ -77,18 +79,18 @@ public class ProductDao implements IProductDao{
 
 	@Override
 	public void addNewProduct(Product product) throws SQLException {
-		String sqlInsertProduct = "INSERT INTO products (name, price) \nVALUES(?,?)";
+		String sqlInsertProduct = "INSERT INTO products (name, price,size) \nVALUES(?,?,?)";
 		PreparedStatement ps;
 		try{
-			ps = connection.prepareStatement(sqlInsertProduct);
+			ps = connection.prepareStatement(sqlInsertProduct,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, product.getName());
 			ps.setDouble(2, product.getPrice());
+			ps.setInt(3,product.getSize());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			product.setId(rs.getInt(1));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -119,7 +121,6 @@ public class ProductDao implements IProductDao{
 			ps.setLong(1, product);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 	}

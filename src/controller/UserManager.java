@@ -21,7 +21,7 @@ public class UserManager {
 	
 	private static UserManager instance;
 	private IUserDao userDao;
-	public static List users;
+	public static List<User> users;
 	
 	private UserManager() {
 		this.userDao = UserDao.getInstance();
@@ -56,14 +56,15 @@ public class UserManager {
 		try {
 			if(userDao.checkUserData(username, password)) {
 				user = userDao.getUserByUsername(username);
+				System.out.println("You are logged in!");
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		} catch (InvalidArgumentsException e) {
-			// TODO Auto-generated catch block
+			else {
+				System.out.println("You are not a registrated user!");
+			}
+		} catch (SQLException | InvalidArgumentsException e)  {
 			System.out.println(e.getMessage());
 		}
+			
 		return user;
 	}
 	
@@ -82,13 +83,13 @@ public class UserManager {
 		try {
 			OrderDao.getInstance().updateOrderStatus(order, status);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 	}
 	
 	public void addToCart(User user, Product product,int count) {
 		user.addProductToShoppingCart(product, count);
+		
 	}
 	
 	public void removeFromCart(User user, Product product) {
@@ -108,7 +109,6 @@ public class UserManager {
 		try {
 			ProductDao.getInstance().addFovoriteProduct(user.getId(), product.getId());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 	}
