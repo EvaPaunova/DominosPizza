@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -47,27 +48,23 @@ public class RegisterServlet extends HttpServlet {
 		User user = null;
 		
 		if (password.equals(confirmpassword)) {
+			
 			try {
 				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
 			} catch (InvalidArgumentsException e) {
-				e.printStackTrace();
+				response.sendRedirect("errorpage.html");
 			}
+			
 			try {
 				UserManager.getInstance().register(user);
-			} catch (Exception e) {
-				e.printStackTrace();
+				response.sendRedirect("login.html");
+			} catch (SQLException e) {
+				response.sendRedirect("errorpage.html");
 			}
 			
-			response.getWriter().println("Successfull registration!");
-			
-			return;
 		} else {
-			response.getWriter().println("Yur password does not match!");
+			response.sendRedirect("errorpage.html");
 		}
 	}
-	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 
 }
