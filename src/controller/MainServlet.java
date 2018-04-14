@@ -30,7 +30,7 @@ public class MainServlet extends HttpServlet {
 		if (logged) {
 			request.getRequestDispatcher("html.html").forward(request, response);
 		} else {
-			request.getRequestDispatcher("logded.html").forward(request, response);
+			request.getRequestDispatcher("logged.html").forward(request, response);
 }
 	}
 
