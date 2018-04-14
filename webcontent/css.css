@@ -149,7 +149,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 	width:100%;
 }
 
-.login-container{
+.login{
 	margin-top:70px;
 	background-color: white; 
 	background-image : url("login.jpg");
@@ -161,6 +161,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 	font-size: 18px;
 	border-radius: 15px;
 	height:400px;
+	position:relative;
 }
 .signin-container{
 	margin:auto;
