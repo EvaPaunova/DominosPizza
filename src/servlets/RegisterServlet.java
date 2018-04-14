@@ -36,12 +36,12 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
+		String firstName = request.getParameter("first name");
+		String lastName = request.getParameter("last name");
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String confirmpassword = request.getParameter("confirmpassword");
+		String confirmpassword = request.getParameter("confirm password");
 		String address = request.getParameter("address");
 		String phoneNumber = request.getParameter("phonenumber");
 
@@ -63,8 +63,15 @@ public class RegisterServlet extends HttpServlet {
 			}
 			
 		} else {
+<<<<<<< HEAD
 			response.sendRedirect("errorpage.html");
 		}
 	}
+=======
+			response.getWriter().println("Your password does not match!");
+		}
+	}
+	
+>>>>>>> 64721a1d962d98bb60c9f43613a8be1557f07f27
 
 }
