@@ -63,15 +63,10 @@ public class RegisterServlet extends HttpServlet {
 			}
 			
 		} else {
-<<<<<<< HEAD
 			response.sendRedirect("errorpage.html");
 		}
-	}
-=======
-			response.getWriter().println("Your password does not match!");
-		}
+
 	}
 	
->>>>>>> 64721a1d962d98bb60c9f43613a8be1557f07f27
 
 }
