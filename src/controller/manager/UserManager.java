@@ -37,11 +37,14 @@ public class UserManager {
 		return userDao.checkUserData(username, password);
 	}
 	
-	public void register(User user) throws SQLException {
+	public boolean register(User user) throws SQLException {
 		
 		if(!userDao.checkUserExist(user.getUsername())) {
 			userDao.addNewUser(user);
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public User logIn(String username, String password) throws SQLException, InvalidArgumentsException {
