@@ -217,7 +217,7 @@ public class UserDao implements IUserDao{
 	@Override
 	public boolean checkUserData(String username, String password){
 		String sqlCheckUser = "SELECT * \nFROM users \nWHERE username = ? ;";
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		try {
 			ps = connection.prepareStatement(sqlCheckUser);
 			ps.setString(1, username);

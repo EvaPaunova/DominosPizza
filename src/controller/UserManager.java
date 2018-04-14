@@ -51,20 +51,15 @@ public class UserManager {
 		}
 	}
 	
-	public User logIn(String username, String password) {
+	public User logIn(String username, String password) throws SQLException, InvalidArgumentsException {
 		User user = null;
-		try {
 			if(userDao.checkUserData(username, password)) {
 				user = userDao.getUserByUsername(username);
 				System.out.println("You are logged in!");
 			}
 			else {
 				System.out.println("You are not a registrated user!");
-			}
-		} catch (SQLException | InvalidArgumentsException e)  {
-			System.out.println(e.getMessage());
-		}
-			
+			}			
 		return user;
 	}
 	
