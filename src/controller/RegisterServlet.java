@@ -1,21 +1,15 @@
-package servlets;
+package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import javax.jws.soap.SOAPBinding.Use;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.UserManager;
+import controller.manager.UserManager;
 import exceptions.InvalidArgumentsException;
 import model.User;
 
@@ -26,10 +20,14 @@ import model.User;
 public class RegisterServlet extends HttpServlet {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Default constructor. 
      */
     public RegisterServlet() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -43,29 +41,24 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String confirmpassword = request.getParameter("confirm password");
 		String address = request.getParameter("address");
-		String phoneNumber = request.getParameter("phonenumber");
+		String phoneNumber = request.getParameter("phone number");
 
 		User user = null;
 		
 		if (password.equals(confirmpassword)) {
-			
 			try {
 				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
-			} catch (InvalidArgumentsException e) {
-				response.sendRedirect("errorpage.html");
-			}
-			
-			try {
 				UserManager.getInstance().register(user);
-				response.sendRedirect("login.html");
-			} catch (SQLException e) {
-				response.sendRedirect("errorpage.html");
+			} catch (SQLException | InvalidArgumentsException e) {
+				System.out.println(e.getMessage());
 			}
 			
+			response.getWriter().println("Successfull registration!");
+			
+			return;
 		} else {
-			response.sendRedirect("errorpage.html");
+			response.getWriter().println("Your password does not match!");
 		}
-
 	}
 	
 

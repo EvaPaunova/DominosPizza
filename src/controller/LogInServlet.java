@@ -1,4 +1,4 @@
-package servlets;
+package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.UserManager;
+import controller.manager.UserManager;
 import exceptions.InvalidArgumentsException;
 import model.dao.UserDao;
 
@@ -22,27 +22,21 @@ public class LogInServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
 		try {
-			if (UserDao.getInstance().checkUserData(username, password)) {
+			if (UserDao.getInstance().userExists(username, password)) {
 				UserManager.getInstance().logIn(username, password);
 				HttpSession session = request.getSession();
 				session.setAttribute("logged", true);
 				session.setAttribute("user", UserDao.getInstance().getUserByUsername(username));
-				response.sendRedirect("html.html");
+				request.getRequestDispatcher("logged.html").forward(request, response);
 				return;
 			} else {
-				response.sendRedirect("login.html");
+				request.getRequestDispatcher("login.html").forward(request, response);
 				return;
-			}
-		} catch (IOException e) {
-			try {
-				response.sendRedirect("login.html");
-			} catch (IOException e1) {
-				e1.printStackTrace();
 			}
 		} catch (SQLException |InvalidArgumentsException e) {
 			try {
@@ -52,11 +46,4 @@ public class LogInServlet extends HttpServlet {
 			}
 		} 
 	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
-	}
-
 }

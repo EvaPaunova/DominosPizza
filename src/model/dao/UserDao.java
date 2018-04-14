@@ -7,20 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import db.DBManager;
 import exceptions.InvalidArgumentsException;
 import model.User;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-
-import controller.UserManager;
 
 
 public class UserDao implements IUserDao{
@@ -46,7 +35,7 @@ public class UserDao implements IUserDao{
 		List<User> users = new ArrayList<>();
 		PreparedStatement ps;
 		try {
-			ps = connection.prepareStatement(sqlSelectAllUsers);
+			ps = connection.prepareStatement(sqlSelectAllUsers,Statement.RETURN_GENERATED_KEYS);
 			ps.setBoolean(1, false);
 			ResultSet set = ps.executeQuery();
 			while (set.next()) {
@@ -58,7 +47,10 @@ public class UserDao implements IUserDao{
 				String phoneNumber = set.getString("phone_number");
 				String username = set.getString("username");
 				String password = set.getString("password");
-				users.add(new User(firstName, lastName, username, email, password, address, phoneNumber));
+				User u = new User(firstName, lastName, username, email, password, address, phoneNumber);
+				u.setId(user_id);
+				users.add(u);
+				
 			}
 		} catch (SQLException | InvalidArgumentsException e) {
 			System.out.println(e.getMessage());
@@ -135,7 +127,6 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		UserManager.getInstance().getAllUsers();
 		
 	}
 
@@ -159,7 +150,6 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		UserManager.getInstance().getAllUsers();
 	}
 
 	@Override
@@ -189,7 +179,6 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		UserManager.getInstance().getAllUsers();
 	}
 
 	@Override
@@ -216,10 +205,10 @@ public class UserDao implements IUserDao{
 	
 	@Override
 	public boolean checkUserData(String username, String password){
-		String sqlCheckUser = "SELECT * \nFROM users \nWHERE username = ? ;";
+		String sqlCheckUser = "SELECT password \nFROM users \nWHERE username = ? ;";
 		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement(sqlCheckUser);
+			ps = connection.prepareStatement(sqlCheckUser,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, username);
 			ResultSet result = ps.executeQuery();
 			while(result.next()) {
@@ -235,4 +224,27 @@ public class UserDao implements IUserDao{
 		return false;
 	}
 
+	public boolean userExists(String username, String password){
+		String sql = "SELECT * FROM users WHERE username = ? AND password = ?;";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.executeQuery();
+			try(ResultSet rs = ps.getGeneratedKeys()){
+				if(rs.next()) {
+					return true;
+				}
+			}
+			catch (SQLException e) {
+					System.out.println(e.getMessage());
+			}
+		} catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		
+
+		return false;
+	}
 }
