@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import controller.manager.UserManager;
 import exceptions.InvalidArgumentsException;
+import model.User;
 import model.dao.UserDao;
 
 @WebServlet("/login")
@@ -26,24 +27,20 @@ public class LogInServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		User user = null;
 		try {
-			if (UserDao.getInstance().userExists(username, password)) {
-				UserManager.getInstance().logIn(username, password);
-				HttpSession session = request.getSession();
-				session.setAttribute("logged", true);
-				session.setAttribute("user", UserDao.getInstance().getUserByUsername(username));
-				request.getRequestDispatcher("logged.html").forward(request, response);
-				return;
-			} else {
-				request.getRequestDispatcher("login.html").forward(request, response);
-				return;
-			}
-		} catch (SQLException |InvalidArgumentsException e) {
-			try {
-				request.getRequestDispatcher("errorpage.html").forward(request, response);
-			} catch (IOException e1) {
-				
-			}
+			user = UserManager.getInstance().logIn(username, password);
+		} catch (SQLException | InvalidArgumentsException e) {
+			e.getMessage();
+		}
+		
+		if (user != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("logged", true);
+			session.setAttribute("user", user);
+			response.sendRedirect("html.html");
+		} else {
+			response.sendRedirect("errorpage.html");
 		} 
 	}
 }

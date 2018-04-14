@@ -16,7 +16,12 @@ public class Demo {
 
 	public static void main(String[] args) {
 
-		User u = UserManager.getInstance().logIn("ivtashkova", "parola");
+		User u = null;
+		try {
+			u = UserManager.getInstance().logIn("ivtashkova", "parola");
+		} catch (SQLException | InvalidArgumentsException e) {
+			e.getMessage();
+		}
 		System.out.println(u.getUsername());
 		Product p = new Product("Pizza", 10.90, 1);
 		Ingredient i = new Ingredient("domat", 2);
