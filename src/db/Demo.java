@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import controller.UserManager;
+import controller.manager.UserManager;
 import exceptions.InvalidArgumentsException;
 import model.Ingredient;
 import model.Product;
@@ -33,7 +33,6 @@ public class Demo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 	}
 
