@@ -38,7 +38,7 @@ public class LogInServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("logged", true);
 			session.setAttribute("user", user);
-			response.sendRedirect("html.html");
+			response.sendRedirect("logged.html");
 		} else {
 			response.sendRedirect("errorpage.html");
 		} 

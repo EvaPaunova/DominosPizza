@@ -28,9 +28,9 @@ public class MainServlet extends HttpServlet {
 			logged = (boolean) request.getSession().getAttribute("logged");
 		}
 		if (logged) {
-			request.getRequestDispatcher("html.html").forward(request, response);
-		} else {
 			request.getRequestDispatcher("logged.html").forward(request, response);
+		} else {
+			request.getRequestDispatcher("html.html").forward(request, response);
 }
 	}
 
