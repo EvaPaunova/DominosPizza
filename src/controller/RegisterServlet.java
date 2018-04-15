@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.manager.UserManager;
 import exceptions.InvalidArgumentsException;
@@ -19,16 +20,7 @@ import model.User;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-     * Default constructor. 
-     */
-    public RegisterServlet() {
-    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,18 +40,26 @@ public class RegisterServlet extends HttpServlet {
 		if (password.equals(confirmpassword)) {
 			try {
 				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
-				UserManager.getInstance().register(user);
-			} catch (SQLException | InvalidArgumentsException e) {
-				System.out.println(e.getMessage());
+			} catch (InvalidArgumentsException e) {
+				response.sendRedirect("errorpage.html");
 			}
-			
-			response.getWriter().println("Successfull registration!");
-			
-			return;
-		} else {
-			response.getWriter().println("Your password does not match!");
 		}
+		
+		if (user != null) {
+			try {
+				if(UserManager.getInstance().register(user)) {
+					response.sendRedirect("html.html");
+				}
+				else {
+					response.sendRedirect("errorpage.html");
+				}	
+				
+			} catch (SQLException e) {
+				response.sendRedirect("errorpage.html");
+			}
+		} 
 	}
+			
 	
 
 }
