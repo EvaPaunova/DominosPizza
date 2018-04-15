@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import controller.UserManager;
+import controller.manager.UserManager;
 import exceptions.InvalidArgumentsException;
 import model.Ingredient;
 import model.Product;
@@ -18,21 +18,12 @@ public class Demo {
 
 		User u = null;
 		try {
-			u = UserManager.getInstance().logIn("ivtashkova", "parola");
+			User user = new User("testfirstname", "testlastname", "username", "password", "email@email.bg", "adress 12557871", "87841218481");
+			UserManager.getInstance().register(user);
 		} catch (SQLException | InvalidArgumentsException e) {
 			e.getMessage();
 		}
-		System.out.println(u.getUsername());
-		Product p = new Product("Pizza", 10.90, 1);
-		Ingredient i = new Ingredient("domat", 2);
-		HashSet<Ingredient> ingreds = new HashSet<>();
-		p.setIngredients(ingreds);
-		try {
-			ProductDao.getInstance().addNewProduct(p);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		
 		
 	}

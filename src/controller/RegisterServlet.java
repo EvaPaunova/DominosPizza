@@ -39,9 +39,10 @@ public class RegisterServlet extends HttpServlet {
 		
 		if (password.equals(confirmpassword)) {
 			try {
-				user = new User(firstName, lastName, username, email, password, address, phoneNumber);
+				user = new User(firstName, lastName, username,password, email, address, phoneNumber);
 			} catch (InvalidArgumentsException e) {
 				response.sendRedirect("errorpage.html");
+				System.out.println(e.getMessage());
 			}
 		}
 		

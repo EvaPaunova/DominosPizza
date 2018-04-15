@@ -79,7 +79,7 @@ public class ProductDao implements IProductDao{
 
 	@Override
 	public void addNewProduct(Product product) throws SQLException {
-		String sqlInsertProduct = "INSERT INTO products (name, price,size) \nVALUES(?,?,?)";
+		String sqlInsertProduct = "INSERT INTO products (name, price,size_id) \nVALUES(?,?,?)";
 		PreparedStatement ps;
 		try{
 			ps = connection.prepareStatement(sqlInsertProduct,Statement.RETURN_GENERATED_KEYS);
